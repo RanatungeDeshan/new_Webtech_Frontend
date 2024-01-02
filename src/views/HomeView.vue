@@ -1,6 +1,6 @@
 <template>
   <main>
-    <DynamicForm title="Welcome to your Vue.js App"/>
+    <DynamicForm title="Welcome to the Patient Record App"/>
   </main>
 </template>
 
