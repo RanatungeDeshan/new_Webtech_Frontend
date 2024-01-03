@@ -10,6 +10,8 @@
           <th>Name</th>
           <th>Geburtsdatum</th>
           <th>TelNum</th>
+          <th>Health Condition</th>
+          <th>Appointments</th>
         </tr>
       </thead>
       <!-- Tabellenkörper mit Patientendaten -->
@@ -19,25 +21,43 @@
           <!-- <td> Elemente, um die entsprechenden Felder auszugeben -->
           <td>{{ patient.id }}</td>
           <td>{{ patient.name }}</td>
-          <!-- Verwende die formatDate-Funktion, um das Datum zu formatieren -->
-          <td>{{ patient.birthdate }}</td>
+          <td>{{ convertToString(patient.birthdate) }}</td>
           <td>{{ patient.telNum }}</td>
+          <td>{{ patient.healthCondition }}</td>
+          <td>{{ convertToString(patient.appointment) }}</td>
         </tr>
       </tbody>
     </table>
+    <button type="button" @click="router.push('/edit');">Edit</button>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import moment from 'moment'
+import { useRouter } from 'vue-router';
 
-type Patient = { id?: number; name: string; birthdate: Date; telNum: number }
+const router = useRouter();
+
+type Patient = { 
+  id?: number; 
+  name: string; 
+  birthdate: Date; 
+  telNum: number;
+  healthCondition: string;
+  appointment: Date
+ }
 
 const patients = ref<Patient[]>([])
 
 onMounted(() => {
   loadPatients()
 })
+
+function convertToString(date: Date): string {
+  // Verwenden Sie moment.js
+  return moment(date).format('DD.MM.YYYY')
+}
 
 function loadPatients() {
   const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL
@@ -71,7 +91,18 @@ h1 {
 table {
   margin: 1rem auto;
   border-collapse: collapse;
-  width: 80%;
+  width: 100%;
+}
+
+button {
+  font-size: large;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  background-color: #0099ff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 th,

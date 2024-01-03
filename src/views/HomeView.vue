@@ -1,6 +1,6 @@
 <template>
   <main>
-    <DynamicForm title="Welcome to the Patient Record App"/>
+    <DynamicForm title="Here you can add patients"/>
   </main>
 </template>
 

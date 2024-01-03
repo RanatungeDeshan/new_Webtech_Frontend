@@ -10,9 +10,11 @@ import { RouterLink, RouterView } from 'vue-router'
       <HelloWorld msg="Hello World!.." />
 
       <nav>
-        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/">Login</RouterLink>
+        <RouterLink to="/home">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
         <RouterLink to="/patients">Patients</RouterLink>
+        <RouterLink to="/edit">Edit</RouterLink>
       </nav>
     </div>
   </header>
@@ -24,6 +26,9 @@ import { RouterLink, RouterView } from 'vue-router'
 header {
   line-height: 1.5;
   max-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .logo {
