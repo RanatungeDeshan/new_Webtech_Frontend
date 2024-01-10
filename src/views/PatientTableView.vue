@@ -12,6 +12,7 @@
           <th>TelNum</th>
           <th>Health Condition</th>
           <th>Appointments</th>
+          <th>Action</th> <!-- Neue Spalte für die Bearbeitungsaktion -->
         </tr>
       </thead>
       <!-- Tabellenkörper mit Patientendaten -->
@@ -25,10 +26,13 @@
           <td>{{ patient.telNum }}</td>
           <td>{{ patient.healthCondition }}</td>
           <td>{{ convertToString(patient.appointment) }}</td>
+          <td>
+            <!-- Button zum Bearbeiten, der die Edit-Seite für den ausgewählten Patienten öffnet -->
+            <button type="button" @click="editPatient(patient.id)">Edit</button>
+          </td>
         </tr>
       </tbody>
     </table>
-    <button type="button" @click="router.push('/edit');">Edit</button>
   </div>
 </template>
 
@@ -72,8 +76,14 @@ function loadPatients() {
     .catch((error) => console.log('error', error))
 }
 
-
+// Funktion, um zur Edit-Seite für den ausgewählten Patienten zu navigieren
+function editPatient(patientId: number | undefined) {
+  if (patientId) {
+    router.push(`/edit/${patientId}`);
+  }
+}
 </script>
+
 
 <style>
 /* Hintergrundfarbe für den gesamten Container */
