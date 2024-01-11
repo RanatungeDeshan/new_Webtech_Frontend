@@ -122,6 +122,7 @@ div {
 h3 {
   text-align: center;
   color: #333;
+  font-size: x-large;
 }
 
 /* Formular-Container mit Abstand und Rahmen */
@@ -139,6 +140,7 @@ input {
   margin: 0.5rem;
   padding: 0.5rem;
   box-shadow: inset 0 0 5px #ddd;
+  
 }
 
 textarea {
@@ -150,6 +152,7 @@ textarea {
   resize: none; /* Deaktiviere die Größenänderung */
   overflow: hidden; /* Verstecke den Bildlauf */
   line-height: 1.5; /* Setze die Zeilenhöhe */
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Speichern-Button mit Farbe und Hover-Effekt */

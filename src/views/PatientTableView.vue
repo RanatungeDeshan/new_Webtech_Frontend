@@ -29,8 +29,10 @@
           <td>
             <!-- Button zum Bearbeiten, der die Edit-Seite für den ausgewählten Patienten öffnet -->
             <button type="button" @click="editPatient(patient.id)">Edit</button>
+            <button type="button" class="delete" @click="deletePatient(patient.id)">Delete</button>
           </td>
         </tr>
+        <div v-if="message">{{ message }}</div>
       </tbody>
     </table>
   </div>
@@ -42,6 +44,8 @@ import moment from 'moment'
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+
+const message = ref('') // Nachricht, die angezeigt wird
 
 type Patient = { 
   id?: number; 
@@ -82,6 +86,34 @@ function editPatient(patientId: number | undefined) {
     router.push(`/edit/${patientId}`);
   }
 }
+
+// Funktion, um den ausgewählten Patienten zu löschen
+async function deletePatient(patientId: number | undefined) {
+  if (patientId) {
+    const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL
+    const endpoint = `${baseUrl}/patients/${patientId}`
+    const requestOptions: RequestInit = {
+      method: 'DELETE',
+      redirect: 'follow'
+    }
+    await fetch(endpoint, requestOptions)
+      .then((response) => {
+        if (response.ok) {
+          // Nach erfolgreichem Löschen den Patienten aus der Liste entfernen
+          patients.value = patients.value.filter(patient => patient.id !== patientId)
+          message.value = 'Patient erfolgreich gelöscht.' 
+        } else {
+          console.error('Error:', response)
+          message.value = 'Fehler beim Löschen.' 
+        }
+      })
+      .catch((error) => console.error('Error:', error))
+      
+  }
+}
+
+
+
 </script>
 
 
@@ -101,7 +133,7 @@ h1 {
 table {
   margin: 1rem auto;
   border-collapse: collapse;
-  width: 100%;
+  width: 175%;
 }
 
 button {
@@ -109,6 +141,17 @@ button {
   margin: 0.5rem;
   padding: 0.5rem;
   background-color: #0099ff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete {
+  font-size: large;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  background-color: #ff0000;
   color: white;
   border: none;
   border-radius: 4px;

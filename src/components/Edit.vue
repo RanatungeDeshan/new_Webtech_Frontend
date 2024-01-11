@@ -55,7 +55,7 @@ function convertToDate(dateString: string): Date {
 }
 
 function updatePatient() {
-  if (!nameField.value || !birthField.value || telNumField.value === null) {
+  if (!nameField.value || !birthField.value || !telNumField.value) {
     errorMessage.value = 'Bitte fülle alle obligatorischen Felder aus.'
     return
   }
