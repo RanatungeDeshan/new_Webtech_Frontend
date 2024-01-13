@@ -20,6 +20,7 @@
       <button type="button" @click="updatePatient">Aktualisieren</button>
 
       <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+      <div v-if="successMessage" class="success-message">{{ successMessage }}</div>
     </div>
 
     <div>
@@ -48,6 +49,7 @@ const telNumField = ref<number | null>(null)
 const healthConditionField = ref('')
 const appointmentField = ref('')
 const errorMessage = ref('')
+const successMessage = ref('')
 
 function convertToDate(dateString: string): Date {
   const [year, month, day] = dateString.split('-').map(Number)
@@ -81,10 +83,12 @@ function updatePatient() {
     .then((response) => response.json())
     .then((responseData) => {
       console.log('Success:', responseData)
+      successMessage.value = 'Erfolgreich bearbeitet'
       errorMessage.value = ''
     })
     .catch((error) => {
       console.log('error', error)
+      successMessage.value = ''
       errorMessage.value = 'Fehler beim Aktualisieren des Patienten.'
     })
 }
@@ -180,6 +184,11 @@ button:hover {
 /* Fehlermeldung mit roter Farbe und Abstand */
 .error-message {
   color: red;
+  margin-top: 10px;
+}
+
+.success-message {
+  color: green;
   margin-top: 10px;
 }
 

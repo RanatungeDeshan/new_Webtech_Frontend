@@ -20,6 +20,7 @@
       <button type="button" @click="save">Speichern</button>
 
       <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+      <div v-if="successMessage" class="success-message">{{ successMessage }}</div>
     </div>
 
     <div>
@@ -51,6 +52,7 @@ const telNumField = ref<number | null>(null)
 const healthConditionField = ref('')
 const appointmentField = ref('')
 const errorMessage = ref('')
+const successMessage = ref('')
 
 function convertToDate(dateString: string): Date {
   const [year, month, day] = dateString.split('-').map(Number)
@@ -59,6 +61,7 @@ function convertToDate(dateString: string): Date {
 
 function save() {
   if (!nameField.value || !birthField.value || telNumField.value === null) {
+    successMessage.value =''
     errorMessage.value = 'Bitte fülle alle obligatorischen Felder aus.'
     return
   }
@@ -86,9 +89,11 @@ function save() {
       patients.value.push(responseData)
       // Wenn das Speichern erfolgreich ist, setze die Fehlermeldung zurück
       errorMessage.value = ''
+      successMessage.value = 'Speichern erfolgreich'
     })
     .catch((error) => {
       console.log('error', error)
+      successMessage.value =''
       errorMessage.value = 'Fehler beim Speichern des Patienten.'
     })
 }
@@ -173,6 +178,11 @@ button:hover {
 /* Fehlermeldung mit roter Farbe und Abstand */
 .error-message {
   color: red;
+  margin-top: 10px;
+}
+
+.successMessage {
+  color: green;
   margin-top: 10px;
 }
 

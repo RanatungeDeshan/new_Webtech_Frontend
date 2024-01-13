@@ -32,7 +32,7 @@
             <button type="button" class="delete" @click="deletePatient(patient.id)">Delete</button>
           </td>
         </tr>
-        <div v-if="message">{{ message }}</div>
+        <div v-if="deleteMessage">{{ deleteMessage }}</div>
       </tbody>
     </table>
   </div>
@@ -45,7 +45,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
-const message = ref('') // Nachricht, die angezeigt wird
+const deleteMessage = ref('') // Nachricht, die angezeigt wird
 
 type Patient = { 
   id?: number; 
@@ -101,10 +101,10 @@ async function deletePatient(patientId: number | undefined) {
         if (response.ok) {
           // Nach erfolgreichem Löschen den Patienten aus der Liste entfernen
           patients.value = patients.value.filter(patient => patient.id !== patientId)
-          message.value = 'Patient erfolgreich gelöscht.' 
+          deleteMessage.value = 'Patient erfolgreich gelöscht.' 
         } else {
           console.error('Error:', response)
-          message.value = 'Fehler beim Löschen.' 
+          deleteMessage.value = 'Fehler beim Löschen.' 
         }
       })
       .catch((error) => console.error('Error:', error))
