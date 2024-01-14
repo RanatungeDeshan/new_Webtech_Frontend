@@ -3,16 +3,19 @@
     <h3>{{ title }}</h3>
     <div class="form-container">
       <label>Name des Patienten*:</label>
-      <input v-model="nameField" placeholder="Name" type="text" />
+      <input v-model="nameField" placeholder="Name" type="text" maxlength="30" />
+      <small>{{ nameField.length }}/30</small>
 
       <label>Geburtsdatum*:</label>
       <input v-model="birthField" placeholder="Geburtsdatum" type="date" />
 
       <label>Phone Number*:</label>
-      <input v-model.number="telNumField" placeholder="TelNum" type="number" />
+      <input v-model.number="telNumField" placeholder="TelNum" type="text" maxlength="10"/>
+      <small>{{ telNumField.length }}/10</small>
 
       <label>Health Condition:</label>
-      <textarea v-model="healthConditionField" placeholder="Health Condition"></textarea>
+      <textarea v-model="healthConditionField" placeholder="Health Condition" maxlength="250"></textarea>
+      <small>{{ healthConditionField.length }}/250</small>
 
       <label>Appointment:</label>
       <input v-model="appointmentField" placeholder="Appointment" type="date" />
@@ -38,14 +41,14 @@ type Patient = {
   id?: number | null
   name: string
   birthdate: Date
-  telNum: number
+  telNum: string
   healthCondition?: string
   appointment?: Date | null
 }
 
 const nameField = ref('')
 const birthField = ref('')
-const telNumField = ref<number | null>(null)
+const telNumField = ref('')
 const healthConditionField = ref('')
 const appointmentField = ref('')
 const errorMessage = ref('')
@@ -58,6 +61,7 @@ function convertToDate(dateString: string): Date {
 
 function updatePatient() {
   if (!nameField.value || !birthField.value || !telNumField.value) {
+    successMessage.value = ''
     errorMessage.value = 'Bitte fülle alle obligatorischen Felder aus.'
     return
   }
@@ -136,6 +140,7 @@ div {
 h3 {
   text-align: center;
   color: #333;
+  font-size: x-large;
 }
 
 /* Formular-Container mit Abstand und Rahmen */
@@ -153,6 +158,7 @@ input {
   margin: 0.5rem;
   padding: 0.5rem;
   box-shadow: inset 0 0 5px #ddd;
+  width: 80%;
 }
 
 textarea {

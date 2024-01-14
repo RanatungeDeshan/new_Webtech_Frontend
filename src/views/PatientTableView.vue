@@ -51,7 +51,7 @@ type Patient = {
   id?: number; 
   name: string; 
   birthdate: Date; 
-  telNum: number;
+  telNum: string;
   healthCondition: string;
   appointment: Date
  }
